@@ -4,7 +4,7 @@
 
 El testing esta preparado para acceder con el usuario predeterminado en el "login"
 
-1.- La sesión cuenta con 3 productos agregados al carrito, uno con el límite de stock exedido, el "producto 1":
+1.- La sesión cuenta con 3 productos agregados al carrito, uno con el límite de stock excedido, el "producto 1":
 <img width="910" alt="Captura de pantalla 2024-04-21 a la(s) 23 43 58" src="https://github.com/gusepc/Pre-entrega-3/assets/87159839/4241fcdd-e802-4494-8673-6a16465deffd">
 
 2.- El stock de los productos se muestra en la pagina principal, por lo que podrá corroborarse su actualización una vez terminada la compra:
