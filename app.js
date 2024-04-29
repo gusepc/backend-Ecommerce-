@@ -17,6 +17,7 @@ import socketChat from "./src/socket/chat.contection.js";
 import socketP from "./src/socket/realTimeP.conection.js";
 
 import config from "./src/config/config.js";
+import errorHandler from "./src/middlewares/errors/index.js";
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use("/", sessionsRouter);
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "src/views");
+app.use(errorHandler);
 
 const httpServer = app.listen(config.port, () => console.log("server started"));
 

@@ -1,6 +1,7 @@
 import productsService from "../services/productService.js";
 import cartsService from "../services/cartService.js";
 import SessionDTO from "../dao/DTOs/session.dto.js";
+import { generateProduct } from "../utils.js";
 
 async function getRoot(req, res) {
   let products = await productsService.getProducts(req);
@@ -69,6 +70,13 @@ function getChat(req, res) {
       title: "LatinChat",
     };
 }
+function getMockingProducts(req, res) {
+  const productos = [];
+  for (let index = 0; index < 100; index++) {
+    productos.push(generateProduct());
+  }
+  res.send(productos);
+}
 
 export default {
   getRoot,
@@ -76,4 +84,5 @@ export default {
   getCart,
   getRtProducts,
   getChat,
+  getMockingProducts,
 };

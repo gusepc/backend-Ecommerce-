@@ -1,4 +1,3 @@
-import productModel from "../dao/mongo/models/product.model.js";
 import productService from "../services/productService.js";
 
 const socketP = async (socketServer) => {
