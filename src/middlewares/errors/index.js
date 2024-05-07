@@ -1,7 +1,8 @@
 import EErrors from "../../services/errors/enums.js";
 
 export default (error, req, res, next) => {
-  console.error(error.name, "\n", error.cause, "\n", error.message);
+  req.logger.info(`${error.name} ${"\n"} ${error.cause} ${"\n"} ${error.message}`);
+
   switch (error.code) {
     case EErrors.INVALID_TYPES_ERROR:
       res.status(400).json({ status: "error", error: error.name, message: error.message });

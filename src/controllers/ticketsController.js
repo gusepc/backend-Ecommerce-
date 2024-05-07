@@ -56,7 +56,7 @@ async function addTicket(req, res) {
 
     res.json({ "Los siguientes productos no pudieron agregarse por falta de stock:": rejected, "Tu ticket:": newTicket });
   } catch (error) {
-    console.log(error);
+    req.logger.error(error);
     res.send(error);
   }
 }

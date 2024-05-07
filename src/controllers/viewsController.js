@@ -36,6 +36,7 @@ async function getProducts(req, res) {
       user: session,
     });
   } else {
+    req.logger.info(`la pagina ${req.query.page} no existe`);
     res.send(`la pagina ${req.query.page} no existe`);
   }
 }
@@ -54,6 +55,7 @@ async function getCart(req, res) {
       style: "cart.css",
     });
   } else {
+    req.logger.info(`${cId} no existe`);
     res.send(`${cId} no existe`);
   }
 }
@@ -77,6 +79,22 @@ function getMockingProducts(req, res) {
   }
   res.send(productos);
 }
+function getLogger(req, res) {
+  const date = new Date();
+  const formattedDateTime = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+  req.logger.fatal(`Error fatal en: ${formattedDateTime}`);
+  req.logger.error(`Error en: ${formattedDateTime}`);
+  req.logger.warning(`Warinig en: ${formattedDateTime}`);
+  req.logger.info(`Mensaje info desde: ${formattedDateTime}`);
+  req.logger.http(`Error en: ${formattedDateTime}`);
+  req.logger.debug(`Error debug en: ${formattedDateTime}`);
+  res.send("Puedes revisar la consola o el archivo error.log dentro de ./src/errors");
+}
+function notFound(req, res, next) {
+  req.logger.http(`La ruta: ${req.url} no existe`);
+  res.status(404).send("La ruta solicitada no fue encontrada en este router.");
+  next();
+}
 
 export default {
   getRoot,
@@ -85,4 +103,6 @@ export default {
   getRtProducts,
   getChat,
   getMockingProducts,
+  getLogger,
+  notFound,
 };

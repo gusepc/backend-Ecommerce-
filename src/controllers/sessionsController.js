@@ -71,6 +71,7 @@ function getRegister(req, res) {
       style: "styles.css",
     });
   } else {
+    req.logger.warning(`usuario no autenticado`);
     res.redirect("/products");
   }
 }

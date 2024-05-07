@@ -18,12 +18,16 @@ import socketP from "./src/socket/realTimeP.conection.js";
 
 import config from "./src/config/config.js";
 import errorHandler from "./src/middlewares/errors/index.js";
+import { addLogger } from "./src/utils/logger.js";
+import notFound from "./src/utils/notFound.js";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join("src/public")));
+
+app.use(addLogger);
 
 app.use(
   session({
@@ -40,14 +44,15 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use("/", viewsRouter);
 app.use("/", productsRouter);
 app.use("/", cartsRouter);
-app.use("/", viewsRouter);
 app.use("/", sessionsRouter);
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "src/views");
 app.use(errorHandler);
+app.use("*", notFound);
 
 const httpServer = app.listen(config.port, () => console.log("server started"));
 

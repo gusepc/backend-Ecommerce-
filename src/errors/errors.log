@@ -1,0 +1,20 @@
+{"level":"fatal","message":"Error fatal en: GET /loggerTest 5/6/2024"}
+{"level":"error","message":"Error en: GET /loggerTest 5/6/2024"}
+{"level":"fatal","message":"Error fatal en: GET /loggerTest 5/6/2024"}
+{"level":"error","message":"Error en: GET /loggerTest 5/6/2024"}
+{"level":"fatal","message":"Error fatal en: GET /loggerTest 5/6/2024"}
+{"level":"error","message":"Error en: GET /loggerTest 5/6/2024"}
+{"level":"fatal","message":"Error fatal en: 5/6/2024 9:01:22 PM"}
+{"level":"error","message":"Error en: GET /loggerTest 5/6/2024"}
+{"level":"fatal","message":"Error fatal en: 5/6/2024 9:01:56 PM"}
+{"level":"error","message":"Error en: 5/6/2024 9:01:56 PM"}
+{"level":"fatal","message":"Error fatal en: 5/6/2024 9:02:20 PM"}
+{"level":"error","message":"Error en: 5/6/2024 9:02:20 PM"}
+{"level":"fatal","message":"Error fatal en: 5/6/2024 9:02:35 PM"}
+{"level":"error","message":"Error en: 5/6/2024 9:02:35 PM"}
+{"level":"fatal","message":"Error fatal en: 5/6/2024 9:05:17 PM"}
+{"level":"error","message":"Error en: 5/6/2024 9:05:17 PM"}
+{"level":"fatal","message":"Error fatal en: 5/6/2024 9:06:48 PM"}
+{"level":"error","message":"Error en: 5/6/2024 9:06:48 PM"}
+{"level":"fatal","message":"Error fatal en: 5/6/2024 9:10:00 PM"}
+{"level":"error","message":"Error en: 5/6/2024 9:10:00 PM"}

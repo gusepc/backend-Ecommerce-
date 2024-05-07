@@ -20,4 +20,6 @@ router.get("/chat", auth, isUser, viewsController.getChat);
 
 router.get("/mockingproducts", viewsController.getMockingProducts);
 
+router.get("/loggerTest", viewsController.getLogger);
+
 export default router;
