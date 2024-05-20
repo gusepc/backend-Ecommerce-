@@ -3,7 +3,7 @@ import local from "passport-local";
 import { createHash, isValidatePassword } from "../utils.js";
 import GitHubStrategy from "passport-github2";
 import cartsServices from "../services/cartService.js";
-import userModel from "../dao/Mongo/models/usser.model.js";
+import userModel from "../dao/mongo/models/usser.model.js";
 import SessionDTO from "../dao/DTOs/session.dto.js";
 import UserDTO from "../dao/DTOs/user.dto.js";
 

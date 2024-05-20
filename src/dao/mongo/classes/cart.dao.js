@@ -17,17 +17,23 @@ class CartManager {
       return { error: error.message };
     }
   }
-  async addToCart(cId, products) {
+  async addToCart(cId, products, user) {
     try {
+      console.log(String(user._id));
       let cart = await cartModel.findById(cId);
       products.forEach(async (e) => {
+        console.log(e);
         let pId = e._id;
         let enCarrito = cart.products.findIndex((p) => p.product._id.toString() === pId);
-
-        if (enCarrito !== -1) {
-          cart.products[enCarrito].quantity += 1;
+        if (String(user._id) != e.owner) {
+          if (enCarrito !== -1) {
+            cart.products[enCarrito].quantity += 1;
+          } else {
+            cart.products.push({ product: pId, quantity: 1 });
+          }
+          console.log("producto agragado");
         } else {
-          cart.products.push({ product: pId, quantity: 1 });
+          console.log("no puedes agragar productos propios");
         }
       });
       await cart.save();
@@ -36,22 +42,34 @@ class CartManager {
       return { error: error.message };
     }
   }
-  async updateCart(cId, pId, newQuantity) {
+  async updateCart(cId, pId, newQuantity, user) {
     try {
       let product = await productService.getProductById(pId);
-      let cart = await cartModel.findById(cId);
-      let enCarrito = cart.products.findIndex((p) => p.product._id.toString() === pId);
 
-      if (enCarrito !== -1) {
-        cart.products[enCarrito].quantity += 1;
-        if (newQuantity) {
-          cart.products[enCarrito].quantity = newQuantity;
+      console.log(product.owner);
+      console.log(user);
+      console.log(product.owner == user);
+      if (product.owner != user) {
+        let cart = await cartModel.findById(cId);
+
+        let enCarrito = cart.products.findIndex((p) => p.product._id.toString() === pId);
+
+        if (enCarrito !== -1) {
+          if (newQuantity) {
+            cart.products[enCarrito].quantity = newQuantity;
+          } else {
+            cart.products[enCarrito].quantity += 1;
+          }
+        } else {
+          cart.products.push({ product: pId, quantity: 1 });
         }
+
+        await cart.save();
+        return `se anadio ${product}`;
       } else {
-        cart.products.push({ product: pId, quantity: 1 });
+        console.log("No puedes agregar tus propios productos a tu carrito");
+        return "No puedes agregar tus propios productos al tu carrito";
       }
-      await cart.save();
-      return `se anadio ${product}`;
     } catch (error) {
       return { error: error.message };
     }

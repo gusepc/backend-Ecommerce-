@@ -1,25 +1,23 @@
 import express from "express";
 import viewsController from "../controllers/viewsController.js";
 import auth from "../middlewares/auth.js";
-import isUser from "../middlewares/isUser.js";
-import isAdmin from "../middlewares/isAdmin.js";
 
 const router = express.Router();
 
 router.use(express.json());
 
-router.get("/", auth, isUser, viewsController.getRoot);
+router.get("/", auth.isAdmin, viewsController.getRoot);
 
-router.get("/products", auth, viewsController.getProducts);
+router.get("/products", auth.auth, viewsController.getProducts);
 
-router.get("/carts/:cid", auth, isUser, viewsController.getCart);
+router.get("/carts/:cid", auth.isUserOrPremium, viewsController.getCart);
 
-router.get("/realtimeproducts", auth, isAdmin, viewsController.getRtProducts);
+router.get("/realtimeproducts", auth.isAdmin, viewsController.getRtProducts);
 
-router.get("/chat", auth, isUser, viewsController.getChat);
+router.get("/chat", auth.isUserOrPremium, viewsController.getChat);
 
-router.get("/mockingproducts", viewsController.getMockingProducts);
+router.get("/mockingproducts", auth.isAdmin, viewsController.getMockingProducts);
 
-router.get("/loggerTest", viewsController.getLogger);
+router.get("/loggerTest", auth.isAdmin, viewsController.getLogger);
 
 export default router;

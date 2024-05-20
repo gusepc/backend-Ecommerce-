@@ -1,4 +1,5 @@
 import cartsServices from "../services/cartService.js";
+import userServices from "../services/usersService.js";
 
 async function addCart(req, res) {
   try {
@@ -22,23 +23,32 @@ async function cartById(req, res) {
     res.send("no se pudo completar tu peticiooooon");
   }
 }
-
+// ASDASDASDASDASDASDASDAS
+// ASDADASDADADADSADA
+// ASDADASDADADADSADAASDADA
 async function updateCart(req, res) {
   try {
+    const user = String(req.session.passport.user);
+
     const cId = req.params.cid;
     const pId = req.params.id;
     const newQuantity = req.body.quantity;
-    let updatedCart = await cartsServices.updateCart(cId, pId, newQuantity);
+
+    let updatedCart = await cartsServices.updateCart(cId, pId, newQuantity, user);
     res.send(updatedCart);
   } catch (error) {
     res.send("no se pudo completar tu petición");
   }
 }
+// ASDASDASDASDASDASDASDAS
+// ASDADASDADADADSADA
+// ASDADASDADADADSADAASDADA
 async function addToCart(req, res) {
   try {
+    const user = await userServices.findOne({ email: `${req.session.user.email}` });
     const cId = req.params.cid;
     const products = req.body;
-    let updatedCart = await cartsServices.addToCart(cId, products);
+    let updatedCart = await cartsServices.addToCart(cId, products, user);
     res.send(updatedCart);
   } catch (error) {
     res.send("no se pudo completar tu petición");

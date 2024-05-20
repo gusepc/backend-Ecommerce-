@@ -12,6 +12,7 @@ import productsRouter from "./src/routes/products.router.js";
 import cartsRouter from "./src/routes/carts.router.js";
 import sessionsRouter from "./src/routes/sessions.router.js";
 import viewsRouter from "./src/routes/views.router.js";
+import usersRouter from "./src/routes/users.router.js";
 
 import socketChat from "./src/socket/chat.contection.js";
 import socketP from "./src/socket/realTimeP.conection.js";
@@ -48,6 +49,7 @@ app.use("/", viewsRouter);
 app.use("/", productsRouter);
 app.use("/", cartsRouter);
 app.use("/", sessionsRouter);
+app.use("/", usersRouter);
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "src/views");

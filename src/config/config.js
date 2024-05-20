@@ -7,4 +7,9 @@ export default {
   adminName: process.env.ADMINNAME,
   adminPassword: process.env.ADMINPASSWORD,
   env: process.env.ENV,
+  service: process.env.MAILING_SERVICE,
+  host: process.env.MAILING_HOST,
+  mail: process.env.MAILING_USER,
+  password: process.env.MAILING_PASSWORD,
+  secret: process.env.JWT_SECRET,
 };

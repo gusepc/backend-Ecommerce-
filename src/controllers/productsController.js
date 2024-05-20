@@ -6,7 +6,8 @@ import EErrors from "../services/errors/enums.js";
 async function addProduct(req, res, next) {
   try {
     const newProduct = req.body;
-    const { title, description, price, stock, status, category, code } = newProduct;
+
+    const { title, description, price, stock, status, category, thumbnail, code } = req.body;
     if (!title || !description || !price || !stock || !status || !category || !code) {
       CustomError.createError({
         name: "Error al crear el producto",
@@ -15,6 +16,8 @@ async function addProduct(req, res, next) {
         code: EErrors.INVALID_TYPES_ERROR,
       });
     }
+    newProduct.owner = String(req.session.passport.user);
+    console.log(newProduct);
     let result = await productsService.addProduct(newProduct);
     res.send({ result: "succes", payload: result });
   } catch (error) {
@@ -83,11 +86,35 @@ async function deleteProduct(req, res, next) {
       });
     }
 
-    productsService.deleteProduct(pId);
-    res.send(`se elimino el producto`);
+    if (productById.owner == String(req.session.passport.user) || String(req.session.user.role) == "admin") {
+      let result = await productsService.deleteProduct(pId);
+      res.send(`se elimino el producto ${result}`);
+    } else {
+      res.send("el producto no te pertenece, no lo puedes eliminar");
+    }
   } catch (error) {
     next(error);
   }
+}
+
+// elinminar del proyecto
+async function crear(req, res) {
+  for (let i = 6; i <= 10; i++) {
+    let producto = {
+      title: `producto ${i}`,
+      description: `description producto ${i}`,
+      price: i * 10,
+      stock: i * 10,
+      status: true,
+      category: "producto",
+      thumbnail: "sin imagen",
+      code: i,
+      owner: "6625f573355ef05474b01940",
+    };
+    let agregado = await productsService.addProduct(producto);
+    console.log(agregado);
+  }
+  res.send("se crearon los productos");
 }
 
 export default {
@@ -96,4 +123,5 @@ export default {
   getProductById,
   updateProduct,
   deleteProduct,
+  crear,
 };
