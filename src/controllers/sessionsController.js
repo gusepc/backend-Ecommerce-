@@ -37,14 +37,17 @@ function passLogin(req, res) {
   try {
     if (req.user) {
       let session = new SessionDTO(req.user);
-      // console.log(session);
+
       req.session.user = session;
 
       if (req.user.email === config.adminName) {
         req.session.user.role = "admin";
       }
-
-      res.redirect("/products");
+      // Cambiar a products
+      //
+      //
+      //
+      res.redirect("/apidocs");
     } else {
       res.status(400).send("lo sentimos, el usuario o la contraseña son incorrectos");
     }

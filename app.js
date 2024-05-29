@@ -7,6 +7,8 @@ import { engine } from "express-handlebars";
 import MongoStore from "connect-mongo";
 import passport from "passport";
 import initializePassport from "./src/config/passport.config.js";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
 
 import productsRouter from "./src/routes/products.router.js";
 import cartsRouter from "./src/routes/carts.router.js";
@@ -44,6 +46,22 @@ app.use(
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
+
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "API",
+      version: "1.0.0",
+      description: "CRUD Productos y Carritos",
+    },
+  },
+  apis: [`./src/docs/**/*.yaml`],
+};
+
+const specs = swaggerJsdoc(swaggerOptions);
+
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 app.use("/", viewsRouter);
 app.use("/", productsRouter);

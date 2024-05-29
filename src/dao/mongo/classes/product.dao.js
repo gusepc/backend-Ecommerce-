@@ -3,8 +3,8 @@ import productModel from "../models/product.model.js";
 class ProductManager {
   async addProduct(product) {
     try {
-      await productModel.create(product);
-      return { message: "se agregó tu producto" };
+      product = await productModel.create(product);
+      return { message: "se agregó tu producto", product };
     } catch (error) {
       return { error: error.message };
     }

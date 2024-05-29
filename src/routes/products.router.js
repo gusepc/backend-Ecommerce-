@@ -8,6 +8,7 @@ router.use(express.json());
 router.post("/api/products", auth.isAdminOrPremium, productsController.addProduct);
 
 router.get("/api/products", auth.isAdmin, productsController.getProducts);
+
 router.get("/api/products/:id", auth.auth, productsController.getProductById);
 
 router.put("/api/products/:id", auth.isAdminOrPremium, productsController.updateProduct);

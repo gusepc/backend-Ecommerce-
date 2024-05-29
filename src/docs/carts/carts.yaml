@@ -1,0 +1,185 @@
+paths:
+  /api/carts:
+    post:
+      summary: Crear un Carrito
+      tags:
+        - Create Cart
+      responses:
+        "200":
+          description: "Crear un carrito (se utiliza al registrar un usuario)"
+  /api/carts/{cid}:
+    get:
+      summary: Obtener un Carrito por ID
+      tags:
+        - Read Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito buscado (6656bd663ae1cc8e2e721911)
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: "Carrito por ID"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+    put:
+      summary: Agregar varios productos al carrito mediante req.body
+      tags:
+        - Update Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito (6656bd663ae1cc8e2e721911)
+          schema:
+            $type: String
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/AddProducts"
+      responses:
+        "200":
+          description: "Agregar varios productos al carrito mediante req.body"
+    delete:
+      summary: Vaciar un carrito por id
+      tags:
+        - Delete Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito (6656bd663ae1cc8e2e721911)
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: "Vaciar un carrito por id"
+  /api/carts/{cid}/product/{id}:
+    put:
+      summary: Agregar producto (id) al carrito (cid), la cantidad del producto puede ser modificada req.body
+      tags:
+        - Update Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito (6656bd663ae1cc8e2e721911)
+          schema:
+            $type: String
+        - name: id
+          in: path
+          required: true
+          description: id del producto a agregar (664aa80bf4a8ed49b5145cc3)
+          schema:
+            $type: String
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/NewQuantity"
+      responses:
+        "200":
+          description: "Agregar producto (id) al carrito (cid), la cantidad del producto puede ser modificada req.body"
+    delete:
+      summary: Eliminar un producto del carrito por ID
+      tags:
+        - Delete Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito (6656bd663ae1cc8e2e721911)
+          schema:
+            $type: String
+        - name: id
+          in: path
+          required: true
+          description: id del producto a eliminar (664aa80bf4a8ed49b5145cc3)
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: "Eliminar producto por ID"
+          content:
+            application/json:
+              schema:
+                type: array
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: El ID del carrito.
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: El ID del producto.
+              quantity:
+                type: integer
+                description: La cantidad del producto en el carrito.
+        __v:
+          type: integer
+          description: Versión del documento.
+      example:
+        _id: "6625f573355ef05474b01940"
+        products:
+          - product: "60a12b1d8c6fc6c632a7a02f"
+            quantity: 2
+          - product: "60a12b1d8c6fc6c632a7a03f"
+            quantity: 1
+        __v: 0
+  requestBodies:
+    NewQuantity:
+      type: object
+      example:
+        "quantity": 30
+    AddProducts:
+      type: array
+      example: [{ "_id": "664aa80bf4a8ed49b5145cc3", "title": "producto 1", "description": "description producto 1", "price": 10, "stock": 10, "status": true, "category": "producto", "thumbnail": "sin imagen", "code": "1", "owner": "6625f7478016e0e382b5fb4e" }, { "_id": "664aa827a58dd202b49cc1a9", "title": "producto 10", "description": "description producto 10", "price": 100, "stock": 100, "status": true, "category": "producto", "thumbnail": "sin imagen", "code": "10", "owner": "6625f573355ef05474b01940" }]
+#     UpdateProduct:
+#       type: object
+#       properties:
+#         title:
+#           type: string
+#           description: El título del producto.
+#         description:
+#           type: string
+#           description: La descripción del producto.
+#         price:
+#           type: number
+#           description: El precio del producto.
+#         stock:
+#           type: integer
+#           description: La cantidad disponible en stock del producto.
+#         status:
+#           type: boolean
+#           description: El estado del producto (activo/inactivo).
+#         category:
+#           type: string
+#           description: La categoría a la que pertenece el producto.
+#         thumbnail:
+#           type: string
+#           description: La URL de la miniatura del producto.
+#         code:
+#           type: string
+#           description: El código único del producto.
+#       example:
+#         title: "Producto 11 - Actualizado"
+#         description: "Descripción actualizada del producto 11"
+#         price: 110

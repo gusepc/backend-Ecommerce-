@@ -1,0 +1,202 @@
+paths:
+  /api/products:
+    post:
+      summary: Crear un producto
+      tags:
+        - Create Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/NewProduct"
+      responses:
+        "200":
+          description: "Crea un nuevo producto"
+
+    get:
+      summary: Obtener todos los productos
+      tags:
+        - Read Products
+      responses:
+        "200":
+          description: "Lista de todos los productos"
+          content:
+            application/json:
+              schema:
+                type: array
+
+  /api/products/{id}:
+    get:
+      summary: Obtener un producto por ID
+      tags:
+        - Read Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id del producto buscado (664aa80bf4a8ed49b5145cc3)
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: "Producto por ID"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Product"
+    put:
+      summary: Modifica un producto exitente
+      tags:
+        - Update Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id del producto buscado
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/UpdateProduct"
+      responses:
+        "200":
+          description: "Modificar un producto exitente"
+    delete:
+      summary: Eliminar un producto por ID
+      tags:
+        - Delete Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id del producto que se quiere eliminar
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: "Eliminar producto por ID"
+          content:
+            application/json:
+              schema:
+                type: array
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID generada por mongo.
+        title:
+          type: string
+          description: El título del producto.
+        description:
+          type: string
+          description: La descripción del producto.
+        price:
+          type: number
+          description: El precio del producto.
+        stock:
+          type: integer
+          description: La cantidad disponible en stock del producto.
+        status:
+          type: boolean
+          description: El estado del producto (activo/inactivo).
+        category:
+          type: string
+          description: La categoría a la que pertenece el producto.
+        thumbnail:
+          type: string
+          description: La URL de la miniatura del producto.
+        code:
+          type: string
+          description: El código único del producto.
+        owner:
+          type: string
+          description: ID del propietario del producto.
+      example:
+        _id: "664aa80bf4a8ed49b5145cc3"
+        title: "Producto 11"
+        description: "Este es el producto prueba 11"
+        price: 110
+        stock: 110
+        status: true,
+        category: "productos"
+        thumbnail: "Sin imagen"
+        code: 11
+        owner: "6625f7478016e0e382b5fb4e"
+  requestBodies:
+    NewProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: El título del producto.
+        description:
+          type: string
+          description: La descripción del producto.
+        price:
+          type: number
+          description: El precio del producto.
+        stock:
+          type: integer
+          description: La cantidad disponible en stock del producto.
+        status:
+          type: boolean
+          description: El estado del producto (activo/inactivo).
+        category:
+          type: string
+          description: La categoría a la que pertenece el producto.
+        thumbnail:
+          type: string
+          description: La URL de la miniatura del producto.
+        code:
+          type: string
+          description: El código único del producto.
+      example:
+        title: "Producto 11"
+        description: "Este es el producto prueba 11"
+        price: 110
+        stock: 110
+        status: true
+        category: "productos"
+        thumbnail: "Sin imagen"
+        code: 11
+    UpdateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: El título del producto.
+        description:
+          type: string
+          description: La descripción del producto.
+        price:
+          type: number
+          description: El precio del producto.
+        stock:
+          type: integer
+          description: La cantidad disponible en stock del producto.
+        status:
+          type: boolean
+          description: El estado del producto (activo/inactivo).
+        category:
+          type: string
+          description: La categoría a la que pertenece el producto.
+        thumbnail:
+          type: string
+          description: La URL de la miniatura del producto.
+        code:
+          type: string
+          description: El código único del producto.
+      example:
+        title: "Producto 11 - Actualizado"
+        description: "Descripción actualizada del producto 11"
+        price: 110

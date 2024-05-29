@@ -8,6 +8,7 @@ async function addProduct(req, res, next) {
     const newProduct = req.body;
 
     const { title, description, price, stock, status, category, thumbnail, code } = req.body;
+
     if (!title || !description || !price || !stock || !status || !category || !code) {
       CustomError.createError({
         name: "Error al crear el producto",
@@ -66,8 +67,8 @@ async function updateProduct(req, res, next) {
       });
     }
 
-    productsService.updateProduct(pId, updatedProdduct);
-    res.send("se actualizo tu producto");
+    let result = await productsService.updateProduct(pId, updatedProdduct);
+    res.send(`se actualizo tu producto: ${result}`);
   } catch (error) {
     next(error);
   }

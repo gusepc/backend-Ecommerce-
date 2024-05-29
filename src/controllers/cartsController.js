@@ -13,8 +13,10 @@ async function addCart(req, res) {
 async function cartById(req, res) {
   try {
     const cId = req.params.cid;
+    console.log(cId);
     let cartById = await cartsServices.cartById(cId);
     if (cartById) {
+      console.log(cartById);
       res.send(cartById);
     } else {
       res.send(`Lo sentimos, el carrito con id:"${req.params.cid}" no existe`);
@@ -23,9 +25,7 @@ async function cartById(req, res) {
     res.send("no se pudo completar tu peticiooooon");
   }
 }
-// ASDASDASDASDASDASDASDAS
-// ASDADASDADADADSADA
-// ASDADASDADADADSADAASDADA
+
 async function updateCart(req, res) {
   try {
     const user = String(req.session.passport.user);
@@ -40,9 +40,7 @@ async function updateCart(req, res) {
     res.send("no se pudo completar tu petición");
   }
 }
-// ASDASDASDASDASDASDASDAS
-// ASDADASDADADADSADA
-// ASDADASDADADADSADAASDADA
+
 async function addToCart(req, res) {
   try {
     const user = await userServices.findOne({ email: `${req.session.user.email}` });

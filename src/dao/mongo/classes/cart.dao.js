@@ -37,6 +37,7 @@ class CartManager {
         }
       });
       await cart.save();
+      console.log(cart);
       return cart;
     } catch (error) {
       return { error: error.message };
@@ -46,9 +47,6 @@ class CartManager {
     try {
       let product = await productService.getProductById(pId);
 
-      console.log(product.owner);
-      console.log(user);
-      console.log(product.owner == user);
       if (product.owner != user) {
         let cart = await cartModel.findById(cId);
 
@@ -65,7 +63,8 @@ class CartManager {
         }
 
         await cart.save();
-        return `se anadio ${product}`;
+        console.log(product);
+        return `se anadio ${product}, cantidad: ${newQuantity || 1}`;
       } else {
         console.log("No puedes agregar tus propios productos a tu carrito");
         return "No puedes agregar tus propios productos al tu carrito";
