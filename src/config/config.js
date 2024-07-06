@@ -12,4 +12,7 @@ export default {
   mail: process.env.MAILING_USER,
   password: process.env.MAILING_PASSWORD,
   secret: process.env.JWT_SECRET,
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.GITHUB_CALLBACK_URL,
 };

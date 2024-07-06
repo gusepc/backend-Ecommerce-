@@ -6,6 +6,7 @@ import cartsServices from "../services/cartService.js";
 import userModel from "../dao/mongo/models/usser.model.js";
 import UserDTO from "../dao/DTOs/user.dto.js";
 import usersService from "../services/usersService.js";
+import config from "./config.js";
 
 const LocalStrategy = local.Strategy;
 
@@ -14,10 +15,11 @@ const initializePassport = () => {
     "github",
     new GitHubStrategy(
       {
-        clientID: "Iv1.403bf7518fe8436c",
-        clientSecret: "3b0810bc906ff5390bebf9c68dd8153f38d9a152",
-        callbackURL: "http://localhost:8080/api/sessions/githubcallback",
+        clientID: config.clientID,
+        clientSecret: config.clientSecret,
+        callbackURL: config.callbackURL,
       },
+
       async (accesToken, refreshToken, profile, done) => {
         try {
           let user = await userModel.findOne({ email: profile._json.email || profile._json.login });
