@@ -78,5 +78,46 @@ function getRestore(req, res) {
       title: "restore",
     };
 }
+async function sendMailDeleted(email, req, res) {
+  const info = {
+    from: "Yo",
+    to: email,
+    subject: "Cuenta eliminada",
+    html: `Lo sentimos, por inactividad hemos eliminado tu cuenta.</p>`,
+  };
 
-export default { sendMail, verify, getRestore, postReset };
+  mailingService.sendSimpleMail(req, info);
+  console.log("emial enviado a: " + email);
+}
+async function sendMailDeletedProduct(email, req, res, product) {
+  const info = {
+    from: "Yo",
+    to: email,
+    subject: "Producto eliminado",
+    html: `Hemos eliminado ${product}`,
+  };
+
+  mailingService.sendSimpleMail(req, info);
+  console.log("emial enviado a: " + email);
+}
+async function sendMailPurchase(email, req, res, ticket) {
+  const info = {
+    from: "Yo",
+    to: email,
+    subject: "Ticket",
+    html: `${ticket}`,
+  };
+
+  mailingService.sendSimpleMail(req, info);
+  console.log("emial enviado a: " + email);
+}
+
+export default {
+  sendMail,
+  verify,
+  getRestore,
+  postReset,
+  sendMailDeleted,
+  sendMailDeletedProduct,
+  sendMailPurchase,
+};

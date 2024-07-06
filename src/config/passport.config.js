@@ -4,8 +4,8 @@ import { createHash, isValidatePassword } from "../utils.js";
 import GitHubStrategy from "passport-github2";
 import cartsServices from "../services/cartService.js";
 import userModel from "../dao/mongo/models/usser.model.js";
-import SessionDTO from "../dao/DTOs/session.dto.js";
 import UserDTO from "../dao/DTOs/user.dto.js";
+import usersService from "../services/usersService.js";
 
 const LocalStrategy = local.Strategy;
 
@@ -23,6 +23,7 @@ const initializePassport = () => {
           let user = await userModel.findOne({ email: profile._json.email || profile._json.login });
           if (user) {
             user = new UserDTO(user);
+            setLastConection(user.email);
 
             return done(null, user);
           }
@@ -102,5 +103,11 @@ const initializePassport = () => {
     done(null, user);
   });
 };
+async function setLastConection(userEmail) {
+  let user = await usersService.findOne({ email: userEmail });
+  user.lastConnection = new Date();
+  await user.save();
+  console.log(user.lastConnection);
+}
 
 export default initializePassport;

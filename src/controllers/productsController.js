@@ -2,6 +2,8 @@ import productsService from "../services/productService.js";
 import CustomError from "../services/errors/CustomErrors.js";
 import { generateErrorInfo } from "../services/errors/info.js";
 import EErrors from "../services/errors/enums.js";
+import mailsController from "./mailsController.js";
+import userServices from "../services/usersService.js";
 
 async function addProduct(req, res, next) {
   try {
@@ -89,6 +91,13 @@ async function deleteProduct(req, res, next) {
 
     if (productById.owner == String(req.session.passport.user) || String(req.session.user.role) == "admin") {
       let result = await productsService.deleteProduct(pId);
+      if (productById.owner) {
+        let owner = await userServices.findById(productById.owner);
+        console.log(owner.email);
+        if (owner.email.includes("@")) {
+          mailsController.sendMailDeletedProduct(owner.email, req, res, productById);
+        }
+      }
       res.send(`se elimino el producto ${result}`);
     } else {
       res.send("el producto no te pertenece, no lo puedes eliminar");
@@ -98,31 +107,10 @@ async function deleteProduct(req, res, next) {
   }
 }
 
-// elinminar del proyecto
-async function crear(req, res) {
-  for (let i = 6; i <= 10; i++) {
-    let producto = {
-      title: `producto ${i}`,
-      description: `description producto ${i}`,
-      price: i * 10,
-      stock: i * 10,
-      status: true,
-      category: "producto",
-      thumbnail: "sin imagen",
-      code: i,
-      owner: "6625f573355ef05474b01940",
-    };
-    let agregado = await productsService.addProduct(producto);
-    console.log(agregado);
-  }
-  res.send("se crearon los productos");
-}
-
 export default {
   getProducts,
   addProduct,
   getProductById,
   updateProduct,
   deleteProduct,
-  crear,
 };

@@ -23,6 +23,7 @@ import config from "./src/config/config.js";
 import errorHandler from "./src/middlewares/errors/index.js";
 import { addLogger } from "./src/utils/logger.js";
 import notFound from "./src/utils/notFound.js";
+import socketA from "./src/socket/admin.conection.js";
 
 const app = express();
 
@@ -88,3 +89,4 @@ mongoose
 const socketServer = new Server(httpServer);
 socketP(socketServer);
 socketChat(socketServer);
+socketA(socketServer);

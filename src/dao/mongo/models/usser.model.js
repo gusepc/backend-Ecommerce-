@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     ref: "carts",
   },
   role: { type: String, default: "user" },
+  lastConnection: Date,
 });
 
 const userModel = mongoose.model("user", userSchema);

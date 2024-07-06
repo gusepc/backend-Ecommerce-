@@ -15,7 +15,4 @@ router.put("/api/products/:id", auth.isAdminOrPremium, productsController.update
 
 router.delete("/api/products/:id", auth.isAdminOrPremium, productsController.deleteProduct);
 
-// eliminar del proyecto
-router.get("/crearproductos", auth.isAdminOrPremium, productsController.crear);
-
 export default router;

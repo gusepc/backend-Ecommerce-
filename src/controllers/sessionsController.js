@@ -1,5 +1,6 @@
 import config from "../config/config.js";
 import SessionDTO from "../dao/DTOs/session.dto.js";
+import usersService from "../services/usersService.js";
 
 function getLogin(req, res) {
   if (!req.session.user) {
@@ -15,14 +16,14 @@ function getLogin(req, res) {
 function getGithub(req, res) {
   try {
     if (req.user) {
-      console.log("=========", req.user, "=========");
       let session = new SessionDTO(req.user);
-      console.log(session);
+
       req.session.user = session;
 
       if (req.user.email === config.adminName) {
         req.session.user.role = "admin";
       }
+
       res.redirect("/products");
     } else {
       res.status(400).send("Se perdio la conexión con Github");
@@ -33,21 +34,20 @@ function getGithub(req, res) {
   }
 }
 
-function passLogin(req, res) {
+async function passLogin(req, res) {
   try {
     if (req.user) {
       let session = new SessionDTO(req.user);
-
       req.session.user = session;
 
       if (req.user.email === config.adminName) {
         req.session.user.role = "admin";
       }
-      // Cambiar a products
-      //
-      //
-      //
-      res.redirect("/apidocs");
+      if (req.user.email != config.adminName) {
+        setLastConection(req.user.email);
+      }
+
+      res.redirect("/products");
     } else {
       res.status(400).send("lo sentimos, el usuario o la contraseña son incorrectos");
     }
@@ -91,6 +91,13 @@ function getLogout(req, res) {
       res.redirect("/api/sessions/login");
     }
   });
+}
+
+async function setLastConection(userEmail) {
+  let user = await usersService.findOne({ email: userEmail });
+  user.lastConnection = new Date();
+  await user.save();
+  console.log(user.lastConnection);
 }
 
 export default {

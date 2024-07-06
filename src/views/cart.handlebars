@@ -5,29 +5,29 @@
 
     <title>{{title}}</title>
   </head>
-  <body>
-
-    <div class="container">
-      <h1>Carrito {{cart._id}}</h1>
-      <div class="products-grid">
-        {{#each cart.products}}
-          <div class="product">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHrkkhVEQLIOZh2DB-L4Nty60TdWWS9eV6sgIkrvBFlQ&s" alt={{this.product.title}} />
-            <h2>{{this.product.title}}</h2>
-            <p>{{this.product.description}}</p>
-            <p>Categoría: {{this.product.category}}</p>
-            <p>Cantidad: {{this.quantity}}</p>
-            <span class="price">${{this.product.price}}</span>
-          </div>
-        {{/each}}
+<body>
+  <div class="container">
+    <h1 data-cart-id={{cart._id}}>Carrito {{cart._id}}</h1>
+    <div class="products-grid">
+      {{#each cart.products}}
+      <div class="product" data-product-id="{{this.product._id}}">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHrkkhVEQLIOZh2DB-L4Nty60TdWWS9eV6sgIkrvBFlQ&s" alt="{{this.product.title}}">
+        <h2>{{this.product.title}}</h2>
+        <p>{{this.product.description}}</p>
+        <p>Categoría: {{this.product.category}}</p>
+        <p>Cantidad: {{this.quantity}}</p>
+        <span class="price">${{this.product.price}}</span>
+        <button class="remove-from-cart-btn">Eliminar del carrito</button>
       </div>
-      <div class="pagination">
-         <a href="/api/carts/{{cart._id}}/purchase" class="profile-btn">Purchase</a>
-      </div>
+      {{/each}}
     </div>
-    <script>
-
-    </script>
+    <div class="pagination">
+      <form action="/api/carts/{{cart._id}}/purchase" method="POST">
+        <button type="submit" class="profile-btn">Purchase</button>
+      </form>
+    </div>
+  </div>
+  <script src="/js/cart.js"></script>
 
   </body>
 </html>

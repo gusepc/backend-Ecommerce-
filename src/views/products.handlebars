@@ -12,7 +12,7 @@
   <nav class="navbar">
     <span class="greeting">Bienvenido, {{user.first_name}} {{user.last_name}}!</span>
      <a href="/api/sessions/current" class="profile-btn">Perfil</a>
-     <a href="carts/{{user.cart}}" class="profile-btn">Carrito</a>
+     <a href="carts/{{user.cart}}"  data-user-cart={{user.cart}} class="profile-btn">Carrito</a>
   <a href="/api/sessions/logout" class="logout-btn">Cerrar sesión</a>
   <span class="greeting">Rol: {{user.role}}</span>
   </nav>
@@ -21,7 +21,7 @@
     <h1>Nuestros productos</h1>
     <div class="products-grid">
       {{#each product.docs}}
-      <div class="product">
+      <div class="product" >
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHrkkhVEQLIOZh2DB-L4Nty60TdWWS9eV6sgIkrvBFlQ&s"
           alt="{{this.title}}">
         <h2>{{this.title}}</h2>
@@ -29,7 +29,7 @@
         <p>Categoría: {{this.category}}</p>
         <p>Stock: {{this.stock}}</p>
         <span class="price">${{this.price}}</span>
-        <button>Agregar al carrito</button>
+         <button class="add-to-cart-btn" data-product-id={{this._id}}>Agregar al carrito</button>
       </div>
       {{/each}}
     </div>
@@ -43,9 +43,7 @@
       {{/if}}
     </div>
   </div>
-<script>
-  console.log(user)
-</script>
+  <script src="/js/products.js"></script>
 
 
 </body>

@@ -2,6 +2,11 @@ import userModel from "../models/usser.model.js";
 
 class UserManager {
   constructor() {}
+  async find() {
+    try {
+      return await userModel.find();
+    } catch (error) {}
+  }
   async crate(user) {
     try {
       return await userModel.create(user);
@@ -19,6 +24,9 @@ class UserManager {
   }
   async findByIdAndUpdate(uid, update) {
     return await userModel.findByIdAndUpdate(uid, update, { new: true });
+  }
+  async findByIdAndDelete(uid) {
+    return await userModel.findByIdAndDelete(uid);
   }
 }
 

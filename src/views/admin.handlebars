@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrar Usuarios</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    button {
+      padding: 5px 10px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    .admin-only {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Administrar Usuarios</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="user-table-body">
+
+            {{!-- {{#each users}}
+
+        <tr>
+
+          <td>{{this.last_name}}</td>
+          <td>{{this.last_name}}</td>
+          <td>{{this.email}}</td>
+          <td>{{this.role}}</td>
+          <td>{{this.age}}</td>
+         <td>
+            <button class="change-role-btn" data-email="{{this.userID}}">Cambiar</button>
+          </td>
+          <td>
+            <button class="delete-user-btn" data-email="{{this.userID}}">Eliminar</button>
+          </td>
+        </tr>
+   {{/each}} --}}
+    </tbody>
+  </table>
+<script src="/socket.io/socket.io.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

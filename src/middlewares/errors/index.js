@@ -13,7 +13,6 @@ export default (error, req, res, next) => {
     case EErrors.INVALID_AUTENTICATION_ERROR:
       return res.redirect("/api/sessions/login");
     default:
-      // return res.redirect("/api/sessions/login");
       res.status(500).json({ status: "error", error: "Error no contemplado" });
       break;
   }

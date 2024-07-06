@@ -2,10 +2,10 @@ import ticketService from "../services/ticketService.js";
 import cartService from "../services/cartService.js";
 import productService from "../services/productService.js";
 import TicketDTO from "../dao/DTOs/ticket.dto.js";
+import mailsController from "../controllers/mailsController.js";
 
 async function addTicket(req, res) {
   try {
-    // verificacion carrito y creacion de ticket
     if (req.params.cid != req.user.cart) {
       res.redirect("/products");
       return;
@@ -53,8 +53,15 @@ async function addTicket(req, res) {
     }
 
     await cartService.emptyCart(req.user.cart.toString(), rejected);
+    const strTicket = JSON.stringify(newTicket);
+    if (rejected.length != 0) {
+      mailsController.sendMailPurchase(req.user.email, req, res, strTicket);
 
-    res.json({ "Los siguientes productos no pudieron agregarse por falta de stock:": rejected, "Tu ticket:": newTicket });
+      res.json({ "Los siguientes productos no pudieron agregarse por falta de stock:": rejected, "Tu ticket:": newTicket });
+    } else {
+      mailsController.sendMailPurchase(req.user.email, req, res, strTicket);
+      res.json({ "Tu ticket:": newTicket });
+    }
   } catch (error) {
     req.logger.error(error);
     res.send(error);
